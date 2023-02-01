@@ -15,15 +15,15 @@ function App() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    console.log("url in useEff");
+    //console.log("url in useEff");
     console.log(url);
     axios
       .get(url)
       .then((response) => {
-        console.log("response.data: ");
-        console.log(response.data);
-        console.log(response.data[0].CITY);
-        console.log(response.data[0].DATE_TIME);
+        // console.log("response.data: ");
+        // console.log(response.data);
+        // console.log(response.data[0].CITY);
+        // console.log(response.data[0].DATE_TIME);
 
         let newData = response.data;
         if (typeof newData === "object") {
@@ -48,6 +48,7 @@ function App() {
       .catch(function (error) {
         if (error.response.status === 404) {
           console.log(error.response.status);
+          setError(true);
           setStatus("No data found for your request");
           setData(null);
         }
@@ -56,7 +57,7 @@ function App() {
 
   function onInputChange(e) {
     setZipInput(e.target.value);
-    console.log(zipInput);
+    // console.log(zipInput);
   }
 
   function onSubmit() {
