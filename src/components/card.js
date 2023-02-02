@@ -8,7 +8,9 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const CardBox = (props) => {
+const CardBox = ({ date_time, uv_value }) => {
+  console.log(date_time);
+  console.log(uv_value);
   const localTime = new Date();
   const exactTime = localTime.toLocaleTimeString();
   let integerLocalTime = parseInt(exactTime.substring(0, 1));
@@ -17,26 +19,19 @@ const CardBox = (props) => {
     integerLocalTime = integerLocalTime + 12;
   }
   console.log("integerLocalTime AGAIN: ", integerLocalTime);
-  let timeOfDay = props.date_time.substring(12);
+
+  let timeOfDay = date_time.substring(12);
   if (timeOfDay.startsWith("0")) {
     timeOfDay = timeOfDay.substring(1);
   }
 
-  let integerPropTime = parseInt(props.date_time.substring(12, 14));
+  let integerPropTime = parseInt(date_time.substring(12, 14));
   console.log("integerPropTime: ", integerPropTime);
-  if (props.date_time.substring(15) === "PM" && integerPropTime !== 12) {
-    console.log("it's late");
+  if (date_time.substring(15) === "PM" && integerPropTime !== 12) {
     integerPropTime = integerPropTime + 12;
   }
-  console.log(
-    "props.date_time.substring(15):",
-    props.date_time.substring(15),
-    "$$"
-  );
+  console.log("props.date_time.substring(15):", date_time.substring(15), "$$");
   console.log("integerPropTime: ", integerPropTime);
-  //TODO
-  //add some logic to add styles based on local time of day. If the time has already passed, make it gray
-  //if the UV index is over 4, make it red or orange
 
   ////Military time converter
   // function timeConversion(s) {
@@ -77,10 +72,7 @@ const CardBox = (props) => {
             <Typography>{timeOfDay}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>UV Index: {props.uv_value}</Typography>
-            {/* <Typography>
-              {integerPropTime} : {integerLocalTime}
-            </Typography> */}
+            <Typography>UV Index: {uv_value}</Typography>
           </AccordionDetails>
         </Accordion>
       ) : (
@@ -97,24 +89,21 @@ const CardBox = (props) => {
               {timeOfDay}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              UV Index: {props.uv_value}
+              UV Index: {uv_value}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {props.uv_value < 3
+              {uv_value < 3
                 ? "Low risk of harm from the sun"
-                : props.uv_value > 2 && props.uv_value < 6
+                : uv_value > 2 && uv_value < 6
                 ? "Moderate risk of harm. Make sure to protect your eyes outside"
-                : props.uv_value > 5 && props.uv_value < 8
+                : uv_value > 5 && uv_value < 8
                 ? "High risk of harm. Wear sunblock, sunglasses and a hat if you need to be outside for more than 15 minutes"
-                : props.uv_value > 7 && props.uv_value < 11
+                : uv_value > 7 && uv_value < 11
                 ? "Very high risk of harm. Wear sunblock, sunglasses and a hat if you need to be outside for more than 15 minutes. Seek shade when possible"
-                : props.uv_value > 11
+                : uv_value > 11
                 ? "Extremely high risk of harm. Wear sunblock, sunglasses and a hat if you need to be outside for more than 15 minutes. Try to avoid sun exposure between 10 a.m. and 4 p.m."
                 : ""}
             </Typography>
-            {/* <Typography>
-              {integerPropTime} : {integerLocalTime}
-            </Typography> */}
           </CardContent>
         </Card>
       )}
